@@ -7,6 +7,8 @@
 - [Visualize Network in Pytorch](https://github.com/szagoruyko/pytorchviz)
 - [Must have Module, cairosvg](https://cairosvg.org/)
 - [Separable Convolution Code](https://github.com/tstandley/Xception-PyTorch/blob/master/xception.py)
+- [CIFAR datasets](https://www.cs.toronto.edu/~kriz/cifar.html)
+- [IMAGENET datasets](http://www.image-net.org/)
 - Really thank you :)
 
 ## Methods
@@ -25,6 +27,7 @@
 - conda install cairo(If you want to visualize the network, it is a required module.)
 
 ## Todo
+- Currently conducting experiments on Cifar-10 and Cifar-100 datasets.
 - Currently there is no ImageNet dataset and it is downloading. Experiments will be conducted as data is downloaded. T.T
 - To implement Optimzier like the paper.
 - Label smoothing.
