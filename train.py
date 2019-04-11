@@ -72,7 +72,7 @@ class Model(nn.Module):
         # global average pooling
         x = F.avg_pool2d(x, kernel_size=x.size()[2:])
         x = torch.squeeze(x)
-        x = F.softmax(self.output(x), dim=-1)
+        x = self.output(x)
 
         return x
 
