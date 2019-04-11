@@ -1,4 +1,5 @@
 # RandWiredNetwork
+- Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
