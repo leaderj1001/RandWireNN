@@ -47,7 +47,7 @@ class Node(nn.Module):
         if len(self.in_degree) > 1:
             x = (input[0] * torch.sigmoid(self.weights[0]))
             for index in range(1, len(input)):
-                x += (input[index][0] * torch.sigmoid(self.weights[index]))
+                x += (input[index] * torch.sigmoid(self.weights[index]))
             out = self.unit(x)
         else:
             out = self.unit(input[0])
