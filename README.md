@@ -1,6 +1,17 @@
 # RandWiredNetwork
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
+## Current Cifar-10 datasets Result
+Datasets | Accuracy
+---------|----------
+CIFAR-10 | 82.00%
+
+![current](https://user-images.githubusercontent.com/22078438/55969025-122a2300-5cb8-11e9-8217-db40bc30eb26.PNG)
+
+### Plot
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/55969037-17876d80-5cb8-11e9-819d-bbd8284056ac.png)
+
+
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
   - Author: Saining Xie Alexander Kirillov Ross Girshick Kaiming He(Facebook AI Research, FAIR)
