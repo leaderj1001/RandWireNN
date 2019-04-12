@@ -4,13 +4,12 @@
 ## Current Cifar-10 datasets Result
 Datasets | Accuracy
 ---------|----------
-CIFAR-10 | 87.16%
+CIFAR-10 | 91.54%
 
-![current](https://user-images.githubusercontent.com/22078438/56015992-d2a21c00-5d35-11e9-8416-2639a679edb3.PNG)
+![current](https://user-images.githubusercontent.com/22078438/56030401-b7480880-5d57-11e9-8387-03e761166b8a.PNG)
 
 ### Plot
-![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56016020-eea5bd80-5d35-11e9-91b2-16c26a588b68.png)
-
+- WORK IN PROGRESS
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
