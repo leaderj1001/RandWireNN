@@ -9,7 +9,8 @@ CIFAR-10 | 91.54%
 ![current](https://user-images.githubusercontent.com/22078438/56030401-b7480880-5d57-11e9-8387-03e761166b8a.PNG)
 
 ### Plot
-- WORK IN PROGRESS
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56039705-d81c5800-5d6f-11e9-90c3-b6d588e55a70.png)
+
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
