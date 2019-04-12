@@ -4,12 +4,12 @@
 ## Current Cifar-10 datasets Result
 Datasets | Accuracy
 ---------|----------
-CIFAR-10 | 82.00%
+CIFAR-10 | 87.16%
 
-![current](https://user-images.githubusercontent.com/22078438/55969025-122a2300-5cb8-11e9-8217-db40bc30eb26.PNG)
+![current](https://user-images.githubusercontent.com/22078438/56015992-d2a21c00-5d35-11e9-8416-2639a679edb3.PNG)
 
 ### Plot
-![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/55969037-17876d80-5cb8-11e9-819d-bbd8284056ac.png)
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56016020-eea5bd80-5d35-11e9-91b2-16c26a588b68.png)
 
 
 ## Reference
