@@ -5,6 +5,10 @@
 Datasets | Accuracy
 ---------|----------
 CIFAR-10 | 91.54%
+---------|----------
+CIFAR-100 | WORK IN PROGRESS
+---------|----------
+IMAGENET | WORK IN PROGRESS
 
 ![current](https://user-images.githubusercontent.com/22078438/56030401-b7480880-5d57-11e9-8387-03e761166b8a.PNG)
 
