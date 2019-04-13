@@ -1,4 +1,4 @@
-# RandWiredNetwork
+# Randomly Wired Neural Network
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
 ## Current Cifar-10 datasets Result
@@ -18,9 +18,11 @@ IMAGENET | WORK IN PROGRESS
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
   - Author: Saining Xie Alexander Kirillov Ross Girshick Kaiming He(Facebook AI Research, FAIR)
   - The paper is really awesome.
+- [Random Graph Generator Module(networkx)](https://networkx.github.io/documentation/networkx-1.10/reference/generators.html)
 - [Visualize Network in Pytorch](https://github.com/szagoruyko/pytorchviz)
 - [Must have Module, cairosvg](https://cairosvg.org/)
 - [Separable Convolution Code](https://github.com/tstandley/Xception-PyTorch/blob/master/xception.py)
+- [CIFAR benchmark](https://github.com/kuangliu/pytorch-cifar)
 - [CIFAR datasets](https://www.cs.toronto.edu/~kriz/cifar.html)
 - [IMAGENET datasets](http://www.image-net.org/)
 - Really thank you :)
