@@ -42,24 +42,27 @@ def draw_plot(epoch_list, train_loss_list, train_acc_list, val_acc_list):
 # reference
 # https://github.com/kuangliu/pytorch-cifar/blob/master/main.py
 def load_data(args):
-    transform_train = transforms.Compose(
-        [transforms.RandomCrop(32, padding=4),
-         transforms.RandomHorizontalFlip(),
-         transforms.ToTensor(),
-         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)), ]
-    )
+    transform_train = transforms.Compose([
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    ])
 
     transform_test = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
     train_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('data', train=True, download=True, transform=transform_train), batch_size=args.batch_size,
+        datasets.CIFAR10('data', train=True, download=True, transform=transform_train),
+        batch_size=args.batch_size,
         shuffle=True
     )
 
     test_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('data', train=False, transform=transform_test), batch_size=args.batch_size, shuffle=False
+        datasets.CIFAR10('data', train=False, transform=transform_test),
+        batch_size=args.batch_size,
+        shuffle=False
     )
 
     return train_loader, test_loader
@@ -122,18 +125,20 @@ def main():
     seed = get_random_int()
     parser = argparse.ArgumentParser('parameters')
 
-    parser.add_argument('--epochs', type=int, default=150, help='number of epochs, (default: 150)')
-    parser.add_argument('--p', type=float, default=0.75, help='graph probability, (default: 0.4)')
+    parser.add_argument('--epochs', type=int, default=150, help='number of epochs to run, (default: 150)')
+    parser.add_argument('--p', type=float, default=0.75, help='graph probability, (default: 0.75)')
     parser.add_argument('--c', type=int, default=154, help='channel count for each node, 109, 154 (default: 154)')
     parser.add_argument('--k', type=int, default=4, help='Each node is connected to k nearest neighbors in ring topology, (Default: 4)')
     parser.add_argument('--m', type=int, default=5, help='Number of edges to attach from a new node to existing nodes, (Default: 5)')
-    parser.add_argument('--graph-mode', type=str, default="WS", help="random graph, (Exampple: ER, WS, BA) default: WS")
-    parser.add_argument('--node-num', type=int, default=32, help="Number of graph node (default n=32)")
-    parser.add_argument('--seed', type=int, default=seed, help="Random seed")
+    parser.add_argument('--graph-mode', type=str, default="WS", help="which random graph you want, (exampple: ER, WS, BA) default: WS")
+    parser.add_argument('--node-num', type=int, default=32, help="number of graph node (default n=32)")
+    parser.add_argument('--seed', type=int, default=seed, help="random seed, (default: random generate value)")
     parser.add_argument('--learning-rate', type=float, default=1e-2, help='learning rate, (default: 1e-2)')
     parser.add_argument('--batch-size', type=int, default=100, help='batch size, (default: 100)')
-    parser.add_argument('--load-model', type=bool, default=False)
-    parser.add_argument('--model-mode', type=str, default="CIFAR", help='CIFAR, SMALL, REGULAR, (default: CIFAR)')
+    parser.add_argument('--model-mode', type=str, default="CIFAR", help='the paper introduces SMALL regimes and REGULAR regimes. (example: CIFAR, SMALL, REGULAR), (default: CIFAR)')
+    parser.add_argument('--load-model', type=bool, default=False, help="WORK IN PROGRESS, (default, False)")
+    parser.add_argument('--weight-decay', type=float, default=5e-4, help="weight decay, (default: 5e-4)")
+    parser.add_argument('--momentum', type=float, default=0.9, help="momentum, (default: 0.9)")
 
     args = parser.parse_args()
 
