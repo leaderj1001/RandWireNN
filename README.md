@@ -25,6 +25,7 @@ python test.py
 ```
 - Put the saved model file in the checkpoint folder and type "python test.py".
 - If you want to change hyper-parameters, you can check "python test.py --help"
+- The model file currently in the checkpoint folder is a model with an accuracy of 92.65%.
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
