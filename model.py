@@ -6,6 +6,13 @@ import networkx as nx
 from graph import RandomGraph
 
 
+def weights_init(m):
+    if isinstance(m, nn.Conv2d):
+        torch.nn.init.xavier_uniform_(m.weight)
+        if m.bias is not None:
+            torch.nn.init.zeros_(m.bias)
+
+
 # reference, Thank you.
 # https://github.com/tstandley/Xception-PyTorch/blob/master/xception.py
 class SeparableConv2d(nn.Module):
@@ -13,6 +20,8 @@ class SeparableConv2d(nn.Module):
         super(SeparableConv2d, self).__init__()
         self.conv = nn.Conv2d(in_channels, in_channels, kernel_size, stride, padding, dilation, groups=in_channels, bias=bias)
         self.pointwise = nn.Conv2d(in_channels, out_channels, 1, 1, 0, 1, 1, bias=bias)
+
+        self.apply(weights_init)
 
     def forward(self, x):
         x = self.conv(x)
@@ -40,7 +49,7 @@ class Node(nn.Module):
         super(Node, self).__init__()
         self.in_degree = in_degree
         if len(self.in_degree) > 1:
-            self.weights = nn.Parameter(torch.ones(len(self.in_degree)), requires_grad=True)
+            self.weights = nn.Parameter(torch.zeros(len(self.in_degree)), requires_grad=True)
         self.unit = Unit(in_channels, out_channels, stride=stride)
 
     def forward(self, *input):
@@ -55,37 +64,47 @@ class Node(nn.Module):
 
 
 class RandWire(nn.Module):
-    def __init__(self, node_num, p, seed, in_channels, out_channels):
+    def __init__(self, node_num, p, seed, in_channels, out_channels, graph_mode):
         super(RandWire, self).__init__()
         self.node_num = node_num
         self.p = p
         self.seed = seed
         self.in_channels = in_channels
         self.out_channels = out_channels
+        self.graph_mode = graph_mode
 
         # get graph nodes and in edges
-        graph = RandomGraph(self.node_num, self.p, self.seed)
+        graph = RandomGraph(self.node_num, self.p, self.seed, graph_mode=self.graph_mode)
         self.nodes, self.in_edges = graph.get_graph_info()
 
         # define input Node
         self.module_list = nn.ModuleList([Node(self.in_edges[0], self.in_channels, self.out_channels, stride=2)])
         # define the rest Node
         self.module_list.extend([Node(self.in_edges[node], self.out_channels, self.out_channels) for node in self.nodes if node > 0])
-        self.memory = {}
 
     def forward(self, x):
+        memory = {}
 
         # start vertex
         out = self.module_list[0].forward(x)
-        self.memory[0] = out
+        memory[0] = out
 
         # the rest vertex
         for node in range(1, len(self.nodes) - 1):
             if len(self.in_edges[node]) > 1:
-                out = self.module_list[node].forward(*[self.memory[in_vertex] for in_vertex in self.in_edges[node]])
+                out = self.module_list[node].forward(*[memory[in_vertex] for in_vertex in self.in_edges[node]])
             else:
-                out = self.module_list[node].forward(self.memory[self.in_edges[node][0]])
-            self.memory[node] = out
+                out = self.module_list[node].forward(memory[self.in_edges[node][0]])
+            memory[node] = out
 
-        out = self.module_list[self.node_num + 1].forward(*[self.memory[in_vertex] for in_vertex in self.in_edges[self.node_num + 1]])
+        out = self.module_list[self.node_num + 1].forward(*[memory[in_vertex] for in_vertex in self.in_edges[self.node_num + 1]])
+
+        # According to the paper, we create a node that connects the input and output of a random graph.
+        # The input and output nodes do not perform convolution operations.
+        # However, performance is better with a separable convolution on the output node.
+
+        # out = memory[self.in_edges[self.node_num + 1][0]]
+        # for in_vertex_index in range(1, len(self.in_edges[self.node_num + 1])):
+        #     out += memory[self.in_edges[self.node_num + 1][in_vertex_index]]
+        # out = out / len(self.in_edges[self.node_num + 1])
         return out
