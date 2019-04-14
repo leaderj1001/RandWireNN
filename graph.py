@@ -2,7 +2,7 @@ import networkx as nx
 
 
 class RandomGraph(object):
-    def __init__(self, node_num, p, seed, k=4, m=5, graph_mode="ER"):
+    def __init__(self, node_num, p, seed, k=4, m=5, graph_mode="WS"):
         self.node_num = node_num
         self.p = p
         self.k = k
@@ -32,6 +32,7 @@ class RandomGraph(object):
         end = []
         for node in self.graph.nodes():
             neighbors = list(self.graph.neighbors(node))
+            neighbors.sort()
             # print(node, neighbors)
 
             edges = []
