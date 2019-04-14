@@ -2,9 +2,9 @@
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
 ## Current Cifar-10 datasets Result
-Datasets | Accuracy
----------|----------
-CIFAR-10 | 92.65%
+Datasets | Model | Accuracy
+----------|----------|----------
+CIFAR-10 | RandWireNN | 92.65%
 CIFAR-100 | WORK IN PROGRESS
 IMAGENET | WORK IN PROGRESS
 
@@ -12,6 +12,12 @@ IMAGENET | WORK IN PROGRESS
 
 ### Plot
 ![current_plot_5278](https://user-images.githubusercontent.com/22078438/56082202-c959a200-5e50-11e9-8e3f-57e60f706932.png)
+
+## Run
+```
+python main.py
+```
+- If you want to change hyper-parameters, you can check "python main.py --help"
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
