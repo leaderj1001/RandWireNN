@@ -16,7 +16,9 @@ def load_data(args):
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
     test_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('data', train=False, transform=transform_test), batch_size=args.batch_size, shuffle=False
+        datasets.CIFAR10('data', train=False, transform=transform_test, download=True),
+        batch_size=args.batch_size,
+        shuffle=False
     )
 
     return test_loader
