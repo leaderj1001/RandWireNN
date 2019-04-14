@@ -153,7 +153,7 @@ def main():
     else:
         model = Model(args.node_num, args.p, args.seed, args.c, args.c, args.graph_mode, args.model_mode).to(device)
 
-    optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, weight_decay=5e-4, momentum=0.9)
+    optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay, momentum=args.momentum)
     criterion = nn.CrossEntropyLoss().to(device)
 
     epoch_list = []
