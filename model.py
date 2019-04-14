@@ -100,10 +100,10 @@ class Model(nn.Module):
             out = self.SMALL_classifier(out)
         elif self.model_mode is "REGULAR":
             out = self.REGULAR_conv1(x)
-            out = self.REGULAR_conv1(out)
-            out = self.REGULAR_conv1(out)
-            out = self.REGULAR_conv1(out)
-            out = self.REGULAR_conv1(out)
+            out = self.REGULAR_conv2(out)
+            out = self.REGULAR_conv3(out)
+            out = self.REGULAR_conv4(out)
+            out = self.REGULAR_conv5(out)
             out = self.REGULAR_classifier(out)
 
         # global average pooling
