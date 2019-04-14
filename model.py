@@ -20,7 +20,6 @@ class Model(nn.Module):
             self.CIFAR_conv1 = nn.Sequential(
                 nn.Conv2d(in_channels=3, out_channels=self.out_channels, kernel_size=3, padding=1),
                 nn.BatchNorm2d(self.out_channels),
-                nn.ReLU()
             )
             self.CIFAR_conv2 = nn.Sequential(
                 RandWire(self.node_num, self.p, self.seed, self.in_channels, self.out_channels, self.graph_mode)
