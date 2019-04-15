@@ -2,11 +2,11 @@
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
 ## Current Cifar-10 datasets Result
-Datasets | Model | Accuracy
-----------|----------|----------
-CIFAR-10 | RandWireNN | 92.65%
-CIFAR-100 | WORK IN PROGRESS
-IMAGENET | WORK IN PROGRESS
+Datasets | Model | Accuracy | Epoch
+----------|----------|----------|----------
+CIFAR-10 | RandWireNN | 92.65% | 70
+CIFAR-100 | RandWireNN | 71.43% | 50
+IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
 ![current_acc](https://user-images.githubusercontent.com/22078438/56082204-d2e30a00-5e50-11e9-9b81-4caf98d70b92.PNG)
 
