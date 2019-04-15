@@ -11,7 +11,10 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 ![current_acc](https://user-images.githubusercontent.com/22078438/56082204-d2e30a00-5e50-11e9-9b81-4caf98d70b92.PNG)
 
 ### Plot
+#### CIFAR-10
 ![current_plot_5278](https://user-images.githubusercontent.com/22078438/56082202-c959a200-5e50-11e9-8e3f-57e60f706932.png)
+#### CIFAR-100
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56109204-6b30da00-5f8a-11e9-94a8-618aefdb222e.png)
 
 ## Run
 ```
