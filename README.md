@@ -1,6 +1,9 @@
 # Randomly Wired Neural Network
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
+![Datasets](https://img.shields.io/badge/Dataset-CIFAR--10-brightgreen.svg) ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--100-green.svg) ![Datasets](https://img.shields.io/badge/Dataset-IMAGENET-yellowgreen.svg)
+
+
 ## Current Cifar-10 datasets Result
 Datasets | Model | Accuracy | Epoch
 ----------|----------|----------|----------
