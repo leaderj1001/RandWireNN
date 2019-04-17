@@ -8,7 +8,7 @@
 Datasets | Model | Accuracy | Epoch
 ----------|----------|----------|----------
 CIFAR-10 | RandWireNN | 92.65% | 70
-CIFAR-100 | RandWireNN | 72.92% | 85
+CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
 ![current_acc](https://user-images.githubusercontent.com/22078438/56082204-d2e30a00-5e50-11e9-9b81-4caf98d70b92.PNG)
