@@ -51,6 +51,9 @@ python test.py
 ## Methods
 - Erdos-Renyi (ER) Graph, Watts-Strogatz (WS) Graph and Barabasi-Albert (BA) Graph are all available.
 - If you want to visualize the network connection, you can follow the jupyter notebook in visualize_graph directory.
+- Label smoothing.
+  - In CIFAR-10, The accuracy was 92.00%.
+  - But, CIFAR-100, I have seen improvements in CIFAR-100.
 
 ## Version
 - Windows 10, Pycharm community...
@@ -64,10 +67,13 @@ python test.py
 - conda install cairo(If you want to visualize the network, it is a required module.)
 
 ## Todo
-- Currently conducting experiments on Cifar-10 and Cifar-100 datasets.
-- Currently there is no ImageNet dataset and it is downloading. Experiments will be conducted as data is downloaded. T.T
+- Experiment with Imagenet dataset.
 - To implement Optimzier like the paper.
-- Label smoothing.
+
+# Network Image
+- I have presented two graph visualizations. The ONNX module seems to be visualized more intuitively.
+  - [ONNX module](https://github.com/leaderj1001/RandWireNN/tree/master/visualize_graph/ONNX_module)
+  - [Graphviz module](https://github.com/leaderj1001/RandWireNN/tree/master/visualize_graph/graphviz_module)
 
 ## Small Network Image
 - It is a picture of the sample small network in the visualize_graph directory.
@@ -79,5 +85,5 @@ python test.py
   - Out_channels: 2
 - The following figure is a simple example, and the basic RandWired NeuralNetwork Module is provided.
 
-## Example of Network
+## Example of Network (
 ![image](https://user-images.githubusercontent.com/22078438/55872389-d1eb7780-5bc7-11e9-95a6-7e053cefd1be.png)
