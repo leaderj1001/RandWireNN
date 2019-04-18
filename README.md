@@ -1,11 +1,15 @@
 # Randomly Wired Neural Network
 - Implement Exploring Randomly Wired Neural Networks for Image Recognition :)
 
+![Datasets](https://img.shields.io/badge/Dataset-CIFAR--10-brightgreen.svg) ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--100-green.svg) ![Datasets](https://img.shields.io/badge/Dataset-IMAGENET-yellowgreen.svg)
+
+
 ## Current Cifar-10 datasets Result
 Datasets | Model | Accuracy | Epoch
 ----------|----------|----------|----------
 CIFAR-10 | RandWireNN | 92.65% | 70
 CIFAR-100 | RandWireNN | 71.43% | 50
+CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
 ![current_acc](https://user-images.githubusercontent.com/22078438/56082204-d2e30a00-5e50-11e9-9b81-4caf98d70b92.PNG)
@@ -14,7 +18,8 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 #### CIFAR-10
 ![current_plot_5278](https://user-images.githubusercontent.com/22078438/56082202-c959a200-5e50-11e9-8e3f-57e60f706932.png)
 #### CIFAR-100
-![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56109204-6b30da00-5f8a-11e9-94a8-618aefdb222e.png)
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56254892-8a03ad80-60fd-11e9-96c3-a0d25f980c6f.png)
+
 
 ## Run
 ```
