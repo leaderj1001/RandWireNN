@@ -4,10 +4,10 @@
 ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--10-brightgreen.svg) ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--100-green.svg) ![Datasets](https://img.shields.io/badge/Dataset-IMAGENET-yellowgreen.svg)
 
 
-## Current Cifar-10 datasets Result
-Datasets | Model | Accuracy | Epoch
-----------|----------|----------|----------
-CIFAR-10 | RandWireNN | 92.65% | 70
+## Experiments
+Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters
+----------|----------|----------|----------|----------|----------
+CIFAR-10 | RandWireNN(c=109, k=4, p=0.75) | 92.70% | 90 | 6h 17m | 9.27M
 CIFAR-100 | RandWireNN | 71.43% | 50
 CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
