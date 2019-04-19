@@ -36,7 +36,7 @@ python main.py
 ```
 python test.py
 ```
-- Put the saved model file in the checkpoint folder and type "python test.py".
+- Put the saved model file in the checkpoint folder and saved graph file in the saved_graph folder and type "python test.py".
 - If you want to change hyper-parameters, you can check "python test.py --help"
 - The model file currently in the checkpoint folder is a model with an accuracy of 92.70%.
 
