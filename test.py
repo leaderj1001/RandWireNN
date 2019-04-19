@@ -60,7 +60,7 @@ def main():
 
     else:
         assert os.path.exists("./checkpoint/" + str(args.seed) + "ckpt.t7"), "File not found. Please check again."
-    print(get_model_parameters(model))
+    print("Number of model parameters: ", get_model_parameters(model))
 
 
 if __name__ == "__main__":
