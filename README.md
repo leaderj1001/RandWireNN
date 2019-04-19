@@ -69,6 +69,7 @@ python test.py
 - networkx 2.2
 - torchviz 0.0.1
 - graphviz 0.10.1
+- tqdm 4.31.1
 - conda install cairo(If you want to visualize the network, it is a required module.)
 
 ## Todo
