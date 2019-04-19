@@ -3,14 +3,20 @@
 
 ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--10-brightgreen.svg) ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--100-green.svg) ![Datasets](https://img.shields.io/badge/Dataset-IMAGENET-yellowgreen.svg)
 
-
 ## Experiments
-Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters
-----------|----------|----------|----------|----------|----------
-CIFAR-10 | RandWireNN(c=109, k=4, p=0.75) | 92.70% | 90 | 6h 17m | 9.27M
+| Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+CIFAR-10 | RandWireNN | 92.70% | 90 | 6h 17m | 9.27M
 CIFAR-100 | RandWireNN | 71.43% | 50
 CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
+
+## Update (2019.04.20)
+1. I added graphing functions for train accuracy, test accuracy, and train loss.
+2. I have added a part to report learning time and accuracy. Reporting of the above results can be seen in the reporting folder.
+- Todo
+  - I'll visualize the layer output.
+  - I'll implement a "Drop Connection regularization".
 
 ### Plot
 #### CIFAR-10
