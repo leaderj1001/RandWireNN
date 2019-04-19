@@ -4,19 +4,18 @@
 ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--10-brightgreen.svg) ![Datasets](https://img.shields.io/badge/Dataset-CIFAR--100-green.svg) ![Datasets](https://img.shields.io/badge/Dataset-IMAGENET-yellowgreen.svg)
 
 
-## Current Cifar-10 datasets Result
-Datasets | Model | Accuracy | Epoch
-----------|----------|----------|----------
-CIFAR-10 | RandWireNN | 92.65% | 70
+## Experiments
+Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters
+----------|----------|----------|----------|----------|----------
+CIFAR-10 | RandWireNN(c=109, k=4, p=0.75) | 92.70% | 90 | 6h 17m | 9.27M
 CIFAR-100 | RandWireNN | 71.43% | 50
 CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
-![current_acc](https://user-images.githubusercontent.com/22078438/56082204-d2e30a00-5e50-11e9-9b81-4caf98d70b92.PNG)
-
 ### Plot
 #### CIFAR-10
-![current_plot_5278](https://user-images.githubusercontent.com/22078438/56082202-c959a200-5e50-11e9-8e3f-57e60f706932.png)
+![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56430039-05cd4800-6300-11e9-8aa4-aac8038dbf9e.png)
+
 #### CIFAR-100
 ![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56254892-8a03ad80-60fd-11e9-96c3-a0d25f980c6f.png)
 
@@ -33,7 +32,7 @@ python test.py
 ```
 - Put the saved model file in the checkpoint folder and type "python test.py".
 - If you want to change hyper-parameters, you can check "python test.py --help"
-- The model file currently in the checkpoint folder is a model with an accuracy of 92.65%.
+- The model file currently in the checkpoint folder is a model with an accuracy of 92.70%.
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
