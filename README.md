@@ -14,9 +14,12 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 ## Update (2019.04.20)
 1. I added graphing functions for train accuracy, test accuracy, and train loss.
 2. I have added a part to report learning time and accuracy. Reporting of the above results can be seen in the reporting folder.
-- Todo
+
+## Todo
   - I'll visualize the layer output.
   - I'll implement a "Drop Connection regularization".
+  - Experiment with Imagenet dataset.
+  - To implement Optimzier like the paper.
 
 ### Plot
 #### CIFAR-10
@@ -32,6 +35,21 @@ python main.py
 ```
 - If you want to change hyper-parameters, you can check "python main.py --help"
 
+Options:
+- `--epochs` (int) - number of epochs, (default: 100).
+- `--p` (float) - graph probability, (default: 0.75).
+- `--c` (int) - channel count for each node, (example: 78, 109, 154), (default: 78).
+- `--k` (int) - each node is connected to k nearest neighbors in ring topology, (default: 4).
+- `--m` (int) - number of edges to attach from a new node to existing nodes, (default: 5).
+- `--graph-mode` (str) - kinds of random graph, (exampple: ER, WS, BA), (default: WS).
+- `--node-num` (int) - number of graph node (default n=32).
+- `--learning-rate` (float) - learning rate, (default: 1e-1).
+- `--model-mode` (str) - which network you use, (example: CIFAR10, CIFAR100, SMALL_REGIME, REGULAR_REGIME), (default: CIFAR10).
+- `--batch-size` (int) - batch size, (default: 100).
+- `--dataset-mode` (str) - which dataset you use, (example: CIFAR10, CIFAR100, MNIST), (default: CIFAR10).
+- `--is-train` (bool) - True if training, False if test. (default: True).
+- `--load-model` (bool) - (default: False).
+
 ## Test
 ```
 python test.py
@@ -39,6 +57,18 @@ python test.py
 - Put the saved model file in the checkpoint folder and saved graph file in the saved_graph folder and type "python test.py".
 - If you want to change hyper-parameters, you can check "python test.py --help"
 - The model file currently in the checkpoint folder is a model with an accuracy of 92.70%.
+
+Options:
+- `--p` (float) - graph probability, (default: 0.75).
+- `--c` (int) - channel count for each node, (example: 78, 109, 154), (default: 78).
+- `--k` (int) - each node is connected to k nearest neighbors in ring topology, (default: 4).
+- `--m` (int) - number of edges to attach from a new node to existing nodes, (default: 5).
+- `--graph-mode` (str) - kinds of random graph, (exampple: ER, WS, BA), (default: WS).
+- `--node-num` (int) - number of graph node (default n=32).
+- `--model-mode` (str) - which network you use, (example: CIFAR10, CIFAR100, SMALL_REGIME, REGULAR_REGIME), (default: CIFAR10).
+- `--batch-size` (int) - batch size, (default: 100).
+- `--dataset-mode` (str) - which dataset you use, (example: CIFAR10, CIFAR100, MNIST), (default: CIFAR10).
+- `--is-train` (bool) - True if training, False if test. (default: False).
 
 ## Reference
 - [Exploring Randomly Wired Neural Networks for Image Recognition](https://arxiv.org/pdf/1904.01569.pdf)
@@ -71,10 +101,6 @@ python test.py
 - graphviz 0.10.1
 - tqdm 4.31.1
 - conda install cairo(If you want to visualize the network, it is a required module.)
-
-## Todo
-- Experiment with Imagenet dataset.
-- To implement Optimzier like the paper.
 
 # Network Image
 - I have presented two graph visualizations. The ONNX module seems to be visualized more intuitively.
