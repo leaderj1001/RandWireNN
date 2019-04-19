@@ -1,71 +1,27 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 
-from torchvision import datasets, transforms
-from torch.autograd import Variable
+from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau, CosineAnnealingLR
+
+import argparse
+import os
+import time
+from tqdm import tqdm
 
 from model import Model
-
-import numpy as np
-import argparse
-
-from torchviz import make_dot
+from preprocess import load_data
+from plot import draw_plot
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
 
-def draw_plot(epoch_list, train_loss_list, train_acc_list, val_acc_list):
-    import matplotlib.pyplot as plt
-
-    plt.figure(figsize=(10, 4))
-    plt.subplot(121)
-    plt.plot(epoch_list, train_loss_list, label='training loss')
-    plt.legend()
-
-    plt.subplot(122)
-    plt.plot(epoch_list, train_acc_list, label='train acc')
-    plt.plot(epoch_list, val_acc_list, label='validation acc')
-    plt.legend()
-
-    if os.path.isdir('./plot'):
-        plt.savefig('./plot/epoch_acc_plot.png')
-
-    else:
-        os.makedirs('./plot')
-        plt.savefig('./plot/epoch_acc_plot.png')
-    plt.close()
-
-
-# reference
-# https://github.com/kuangliu/pytorch-cifar/blob/master/main.py
-def load_data(args):
-    transform_train = transforms.Compose([
-        transforms.RandomCrop(32, padding=4),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ])
-
-    transform_test = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    ])
-    train_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('data', train=True, download=True, transform=transform_train),
-        batch_size=args.batch_size,
-        shuffle=True
-    )
-
-    test_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('data', train=False, transform=transform_test),
-        batch_size=args.batch_size,
-        shuffle=False
-    )
-
-    return train_loader, test_loader
+def adjust_learning_rate(optimizer, epoch, args):
+    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
+    lr = args.learning_rate * (0.1 ** (epoch // 30))
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
 
 
 def train(model, train_loader, optimizer, criterion, epoch, args):
@@ -73,7 +29,7 @@ def train(model, train_loader, optimizer, criterion, epoch, args):
     step = 0
     train_loss = 0
     train_acc = 0
-    for data, target in train_loader:
+    for data, target in tqdm(train_loader, desc="epoch " + str(epoch), mininterval=1):
         adjust_learning_rate(optimizer, epoch, args)
         data, target = data.to(device), target.to(device)
 
@@ -100,60 +56,49 @@ def train(model, train_loader, optimizer, criterion, epoch, args):
 def test(model, test_loader):
     model.eval()
     correct = 0
-    for data, target in test_loader:
+    for data, target in tqdm(test_loader, desc="evaluation", mininterval=1):
         data, target = data.to(device), target.to(device)
         output = model(data)
         prediction = output.data.max(1)[1]
         correct += prediction.eq(target.data).sum()
 
-    return 100. * float(correct) / len(test_loader.dataset)
-
-
-def get_random_int():
-    import random
-    return random.randint(0, 10000)
-
-
-def adjust_learning_rate(optimizer, epoch, args):
-    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
-    lr = args.learning_rate * (0.1 ** (epoch // 30))
-    for param_group in optimizer.param_groups:
-        param_group['lr'] = lr
+    acc = 100. * float(correct) / len(test_loader.dataset)
+    return acc
 
 
 def main():
-    seed = get_random_int()
     parser = argparse.ArgumentParser('parameters')
 
-    parser.add_argument('--epochs', type=int, default=150, help='number of epochs to run, (default: 150)')
+    parser.add_argument('--epochs', type=int, default=100, help='number of epochs, (default: 100)')
     parser.add_argument('--p', type=float, default=0.75, help='graph probability, (default: 0.75)')
-    parser.add_argument('--c', type=int, default=154, help='channel count for each node, 109, 154 (default: 154)')
-    parser.add_argument('--k', type=int, default=4, help='Each node is connected to k nearest neighbors in ring topology, (Default: 4)')
-    parser.add_argument('--m', type=int, default=5, help='Number of edges to attach from a new node to existing nodes, (Default: 5)')
-    parser.add_argument('--graph-mode', type=str, default="WS", help="which random graph you want, (exampple: ER, WS, BA) default: WS")
-    parser.add_argument('--node-num', type=int, default=32, help="number of graph node (default n=32)")
-    parser.add_argument('--seed', type=int, default=seed, help="random seed, (default: random generate value)")
-    parser.add_argument('--learning-rate', type=float, default=1e-2, help='learning rate, (default: 1e-2)')
+    parser.add_argument('--c', type=int, default=78, help='channel count for each node, 109, 154 (default: 154)')
+    parser.add_argument('--k', type=int, default=4, help='each node is connected to k nearest neighbors in ring topology, (default: 4)')
+    parser.add_argument('--m', type=int, default=5, help='number of edges to attach from a new node to existing nodes, (default: 5)')
+    parser.add_argument('--graph-mode', type=str, default="WS", help="random graph, (Example: ER, WS, BA), (default: WS)")
+    parser.add_argument('--node-num', type=int, default=32, help="Number of graph node (default n=32)")
+    parser.add_argument('--learning-rate', type=float, default=1e-1, help='learning rate, (default: 1e-1)')
     parser.add_argument('--batch-size', type=int, default=100, help='batch size, (default: 100)')
-    parser.add_argument('--model-mode', type=str, default="CIFAR", help='the paper introduces SMALL regimes and REGULAR regimes. (example: CIFAR, SMALL, REGULAR), (default: CIFAR)')
-    parser.add_argument('--load-model', type=bool, default=False, help="WORK IN PROGRESS, (default, False)")
-    parser.add_argument('--weight-decay', type=float, default=5e-4, help="weight decay, (default: 5e-4)")
-    parser.add_argument('--momentum', type=float, default=0.9, help="momentum, (default: 0.9)")
+    parser.add_argument('--model-mode', type=str, default="CIFAR10", help='CIFAR10, CIFAR100, SMALL_REGIME, REGULAR_REGIME, (default: CIFAR10)')
+    parser.add_argument('--dataset-mode', type=str, default="CIFAR10", help='Which dataset to use? (Example, CIFAR10, CIFAR100, MNIST), (default: CIFAR10)')
+    parser.add_argument('--load-model', type=bool, default=False)
+    parser.add_argument('--is-train', type=bool, default=True)
 
     args = parser.parse_args()
 
     train_loader, test_loader = load_data(args)
 
     if args.load_model:
-        model = Model(args.node_num, args.p, args.seed, args.c, args.c, args.graph_mode, args.model_mode).to(device)
-        checkpoint = torch.load('./checkpoint/' + str(args.seed) + 'ckpt.t7')
-        model.load_state_dict(checkpoint['model_state_dict'])
+        model = Model(args.node_num, args.p, args.c, args.c, args.graph_mode, args.model_mode, args.dataset_mode, args.is_train).to(device)
+        filename = "c_" + str(args.c) + "_p_" + str(args.p) + "_graph_mode_" + args.graph_mode + "_dataset_" + args.dataset_mode
+        checkpoint = torch.load('./checkpoint/' + filename + 'ckpt.t7')
+        model.load_state_dict(checkpoint['model'])
         epoch = checkpoint['epoch']
         acc = checkpoint['acc']
+        print("Load Model Accuracy: ", acc, "Load Model end epoch: ", epoch)
     else:
-        model = Model(args.node_num, args.p, args.seed, args.c, args.c, args.graph_mode, args.model_mode).to(device)
+        model = Model(args.node_num, args.p, args.c, args.c, args.graph_mode, args.model_mode, args.dataset_mode, args.is_train).to(device)
 
-    optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay, momentum=args.momentum)
+    optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, weight_decay=5e-4, momentum=0.9)
     criterion = nn.CrossEntropyLoss().to(device)
 
     epoch_list = []
@@ -161,30 +106,41 @@ def main():
     train_acc_list = []
     train_loss_list = []
     max_test_acc = 0
-    for epoch in range(1, args.epochs + 1):
-        epoch_list.append(epoch)
-        train_loss, train_acc = train(model, train_loader, optimizer, criterion, epoch, args)
-        test_acc = test(model, test_loader)
-        test_acc_list.append(test_acc)
-        train_loss_list.append(train_loss)
-        train_acc_list.append(train_acc)
-        print('Test set accuracy: {0:.3f}%'.format(test_acc))
+    if not os.path.isdir("reporting"):
+        os.mkdir("reporting")
 
-        if max_test_acc < test_acc:
-            print('Saving..')
-            state = {
-                'model': model.state_dict(),
-                'acc': test_acc,
-                'epoch': epoch,
-            }
-            if not os.path.isdir('checkpoint'):
-                os.mkdir('checkpoint')
-            torch.save(state, './checkpoint/' + str(args.seed) + 'ckpt.t7')
-            max_test_acc = test_acc
-            draw_plot(epoch_list, train_loss_list, train_acc_list, test_acc_list)
+    start_time = time.time()
+    with open("./reporting/" + "c_" + str(args.c) + "_p_" + str(args.p) + "_graph_mode_" + args.graph_mode + "_dataset_" + args.dataset_mode + ".txt", "w") as f:
+        for epoch in range(1, args.epochs + 1):
+            # scheduler = CosineAnnealingLR(optimizer, epoch)
+            epoch_list.append(epoch)
+            train_loss, train_acc = train(model , train_loader, optimizer, criterion, epoch, args)
+            test_acc = test(model, test_loader)
+            test_acc_list.append(test_acc)
+            train_loss_list.append(train_loss)
+            train_acc_list.append(train_acc)
+            print('Test set accuracy: {0:.3f}%'.format(test_acc))
+            f.write("[Epoch {0:3d}] Test set accuracy: {1:.3f}%".format(epoch, test_acc))
+            f.write("\n ")
+
+            if max_test_acc < test_acc:
+                print('Saving..')
+                state = {
+                    'model': model.state_dict(),
+                    'acc': test_acc,
+                    'epoch': epoch,
+                }
+                if not os.path.isdir('checkpoint'):
+                    os.mkdir('checkpoint')
+                filename = "c_" + str(args.c) + "_p_" + str(
+                    args.p) + "_graph_mode_" + args.graph_mode + "_dataset_" + args.dataset_mode
+                torch.save(state, './checkpoint/' + filename + 'ckpt.t7')
+                max_test_acc = test_acc
+                draw_plot(epoch_list, train_loss_list, train_acc_list, test_acc_list)
+            print("Training time: ", time.time() - start_time)
+            f.write("Training time: " + str(time.time() - start_time))
+            f.write("\n")
 
 
 if __name__ == '__main__':
     main()
-
-
