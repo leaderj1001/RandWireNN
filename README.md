@@ -16,8 +16,8 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 2. I have added a part to report learning time and accuracy. Reporting of the above results can be seen in the reporting folder.
 
 ## Todo
-  - I'll visualize the layer output.
-  - I'll implement a "Drop Connection regularization".
+  - I'll visualize the layer output. - implementation is done. I'll upload soon.
+  - I'll implement a "Drop Connection regularization". - implementation is done. but I'm currently experimenting.
   - Experiment with Imagenet dataset.
   - To implement Optimzier like the paper.
 
