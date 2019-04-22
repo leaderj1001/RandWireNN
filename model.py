@@ -33,16 +33,20 @@ class Model(nn.Module):
             self.CIFAR_conv1 = nn.Sequential(
                 nn.Conv2d(in_channels=3, out_channels=self.out_channels, kernel_size=3, padding=1),
                 nn.BatchNorm2d(self.out_channels),
+                nn.ReLU()
             )
-
             self.CIFAR_conv2 = nn.Sequential(
-                RandWire(self.node_num, self.p, self.in_channels, self.out_channels, self.graph_mode, self.is_train, name="CIFAR_conv2")
+                nn.Conv2d(in_channels=self.in_channels, out_channels=self.out_channels, kernel_size=3, padding=1),
+                nn.BatchNorm2d(self.out_channels),
             )
+            # self.CIFAR_conv2 = nn.Sequential(
+            #     RandWire(self.node_num, self.p, self.in_channels, self.out_channels, self.graph_mode, self.is_train, name="CIFAR10_conv2")
+            # )
             self.CIFAR_conv3 = nn.Sequential(
-                RandWire(self.node_num, self.p, self.in_channels, self.out_channels * 2, self.graph_mode, self.is_train, name="CIFAR_conv3")
+                RandWire(self.node_num, self.p, self.in_channels, self.out_channels * 2, self.graph_mode, self.is_train, name="CIFAR10_conv3")
             )
             self.CIFAR_conv4 = nn.Sequential(
-                RandWire(self.node_num, self.p, self.in_channels * 2, self.out_channels * 4, self.graph_mode, self.is_train, name="CIFAR_conv4")
+                RandWire(self.node_num, self.p, self.in_channels * 2, self.out_channels * 4, self.graph_mode, self.is_train, name="CIFAR10_conv4")
             )
 
             self.CIFAR_classifier = nn.Sequential(
@@ -148,7 +152,9 @@ class Model(nn.Module):
             out = self.REGULAR_classifier(out)
 
         # global average pooling
-        out = F.avg_pool2d(out, kernel_size=x.size()[2:])
+        batch_size, channels, height, width = out.size()
+        out = F.avg_pool2d(out, kernel_size=[height, width])
+        # out = F.avg_pool2d(out, kernel_size=x.size()[2:])
         out = torch.squeeze(out)
         out = self.output(out)
 

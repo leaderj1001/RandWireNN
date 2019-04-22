@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import random
 
 from graph import RandomGraph
 
@@ -85,7 +86,8 @@ class RandWire(nn.Module):
 
         # get graph nodes and in edges
         graph_node = RandomGraph(self.node_num, self.p, graph_mode=graph_mode)
-        if self.is_train:
+        if self.is_train is True:
+            print("is_train: True")
             graph = graph_node.make_graph()
             self.nodes, self.in_edges = graph_node.get_graph_info(graph)
             graph_node.save_random_graph(graph, name)
