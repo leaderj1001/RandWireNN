@@ -20,7 +20,7 @@ class RandomGraph(object):
         if self.graph_mode is "ER":
             graph = nx.random_graphs.erdos_renyi_graph(self.node_num, self.p)
         elif self.graph_mode is "WS":
-            graph = nx.random_graphs.watts_strogatz_graph(self.node_num, self.k, self.p)
+            graph = nx.random_graphs.connected_watts_strogatz_graph(self.node_num, self.k, self.p)
         elif self.graph_mode is "BA":
             graph = nx.random_graphs.barabasi_albert_graph(self.node_num, self.m)
 
