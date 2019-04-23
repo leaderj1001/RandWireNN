@@ -6,7 +6,9 @@
 ## Experiments
 | Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters |
 | :---: | :---: | :---: | :---: | :---: | :---: |
+CIFAR-10 | RandWireNN(4, 0.75), c=78 | 93.61% | 77 | 3h 50m | 4.75M
 CIFAR-10 | RandWireNN(4, 0.75), c=109 | 94.03% | 62 | 3h 50m | 8.93M
+CIFAR-10 | RandWireNN(4, 0.75), c=154 | 94.23% | 94 | 8h 40m | 17.31M
 CIFAR-100 | RandWireNN | 71.43% | 50
 CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
