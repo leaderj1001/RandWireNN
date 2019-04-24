@@ -9,6 +9,7 @@
 CIFAR-10 | RandWireNN(4, 0.75), c=78 | 93.61% | 77 | 3h 50m | 4.75M
 CIFAR-10 | RandWireNN(4, 0.75), c=109 | 94.03% | 62 | 3h 50m | 8.93M
 CIFAR-10 | RandWireNN(4, 0.75), c=154 | 94.23% | 94 | 8h 40m | 17.31M
+CIFAR-100 | RandWireNN(4, 0.75), c=78 | 73.63% | 97 | 4h 46m | 4.87M
 CIFAR-100 | RandWireNN(4, 0.75), c=109 | 75.00% | 99 | 6h 9m | 9.04M
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
