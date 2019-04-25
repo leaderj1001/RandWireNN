@@ -31,6 +31,9 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 #### CIFAR-100
 ![epoch_acc_plot_75퍼_CIFAR100](https://user-images.githubusercontent.com/22078438/56633036-745f2c80-6697-11e9-867c-528ac280b588.png)
 
+### Visualize layer
+![img](https://user-images.githubusercontent.com/22078438/56752704-dae16900-67c3-11e9-8400-c6c96a5063e4.PNG)
+- As each Epoch passes, we can see that the feature map is formed around the object.
 
 ## Run
 ```
