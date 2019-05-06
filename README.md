@@ -14,13 +14,15 @@ CIFAR-100 | RandWireNN(4, 0.75), c=109 | 75.00% | 99 | 6h 9m | 9.04M
 CIFAR-100 | RandWireNN(4, 0.75), c=154 | 75.42% | 99 | 9h 32m | 17.43M
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
+## Update (2019.05.06)
+1. Visualize weights
+2. Add directory of Drop Connection regularization RandWireNN
+
 ## Update (2019.04.20)
 1. I added graphing functions for train accuracy, test accuracy, and train loss.
 2. I have added a part to report learning time and accuracy. Reporting of the above results can be seen in the reporting folder.
 
 ## Todo
-  - I'll visualize the layer output. - implementation is done. I'll upload soon.
-  - I'll implement a "Drop Connection regularization". - implementation is done. but I'm currently experimenting.
   - Experiment with Imagenet dataset.
   - To implement Optimzier like the paper.
 
@@ -123,5 +125,5 @@ Options:
   - Out_channels: 2
 - The following figure is a simple example, and the basic RandWired NeuralNetwork Module is provided.
 
-## Example of Network (
+## Example of Network
 ![image](https://user-images.githubusercontent.com/22078438/55872389-d1eb7780-5bc7-11e9-95a6-7e053cefd1be.png)
