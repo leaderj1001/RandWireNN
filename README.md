@@ -6,9 +6,12 @@
 ## Experiments
 | Datasets | Model | Accuracy | Epoch | Training Time | Model Parameters |
 | :---: | :---: | :---: | :---: | :---: | :---: |
+CIFAR-10 | RandWireNN(4, 0.75), c=78 | 93.61% | 77 | 3h 50m | 4.75M
 CIFAR-10 | RandWireNN(4, 0.75), c=109 | 94.03% | 62 | 3h 50m | 8.93M
-CIFAR-100 | RandWireNN | 71.43% | 50
-CIFAR-100 | RandWireNN + Label Smoothing | 72.92% | 85
+CIFAR-10 | RandWireNN(4, 0.75), c=154 | 94.23% | 94 | 8h 40m | 17.31M
+CIFAR-100 | RandWireNN(4, 0.75), c=78 | 73.63% | 97 | 4h 46m | 4.87M
+CIFAR-100 | RandWireNN(4, 0.75), c=109 | 75.00% | 99 | 6h 9m | 9.04M
+CIFAR-100 | RandWireNN(4, 0.75), c=154 | 75.42% | 99 | 9h 32m | 17.43M
 IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 
 ## Update (2019.04.20)
@@ -16,8 +19,8 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 2. I have added a part to report learning time and accuracy. Reporting of the above results can be seen in the reporting folder.
 
 ## Todo
-  - I'll visualize the layer output.
-  - I'll implement a "Drop Connection regularization".
+  - I'll visualize the layer output. - implementation is done. I'll upload soon.
+  - I'll implement a "Drop Connection regularization". - implementation is done. but I'm currently experimenting.
   - Experiment with Imagenet dataset.
   - To implement Optimzier like the paper.
 
@@ -26,8 +29,11 @@ IMAGENET | WORK IN PROGRESS | WORK IN PROGRESS
 ![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56496272-aeafb900-6533-11e9-832d-c2d30ec36d45.png)
 
 #### CIFAR-100
-![epoch_acc_plot](https://user-images.githubusercontent.com/22078438/56254892-8a03ad80-60fd-11e9-96c3-a0d25f980c6f.png)
+![epoch_acc_plot_75퍼_CIFAR100](https://user-images.githubusercontent.com/22078438/56633036-745f2c80-6697-11e9-867c-528ac280b588.png)
 
+### Visualize layer
+![img](https://user-images.githubusercontent.com/22078438/56752704-dae16900-67c3-11e9-8400-c6c96a5063e4.PNG)
+- As each Epoch passes, we can see that the feature map is formed around the object.
 
 ## Run
 ```
