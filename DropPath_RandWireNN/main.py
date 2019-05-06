@@ -87,8 +87,8 @@ def main():
     parser.add_argument('--model-mode', type=str, default="CIFAR10", help='CIFAR10, CIFAR100, SMALL_REGIME, REGULAR_REGIME, (default: CIFAR10)')
     parser.add_argument('--dataset-mode', type=str, default="CIFAR10", help='Which dataset to use? (Example, CIFAR10, CIFAR100, MNIST), (default: CIFAR10)')
     parser.add_argument('--is-train', type=bool, default=True, help="True if training, False if test. (default: True)")
-    parser.add_argument('--drop-path', type=float, default=0.1, help="regularization by disconnecting between random graphs,")
-    parser.add_argument('--load-model', type=bool, default=False)
+    parser.add_argument('--drop-path', type=float, default=0.1, help="regularization by disconnecting between random graphs, (default: 0.1)")
+    parser.add_argument('--load-model', type=bool, default=False, help="when using pretrained weights, (default: False)")
 
     args = parser.parse_args()
 
@@ -103,9 +103,10 @@ def main():
         filename = "c_" + str(args.c) + "_p_" + str(args.p) + "_graph_mode_" + args.graph_mode + "_dataset_" + args.dataset_mode
         checkpoint = torch.load('./checkpoint/' + filename + 'ckpt.t7')
         model.load_state_dict(checkpoint['model'])
-        epoch = checkpoint['epoch']
-        acc = checkpoint['acc']
-        print("Load Model Accuracy: ", acc, "Load Model end epoch: ", epoch)
+        start_epoch = checkpoint['epoch']
+        max_test_acc = checkpoint['acc']
+        print("Load Model Accuracy: ", max_test_acc, "Load Model end epoch: ", start_epoch)
+        
     else:
         if args.drop_path > 0:
             model = DropModel(args.node_num, args.p, args.c, args.c, args.graph_mode, args.model_mode,
@@ -113,6 +114,8 @@ def main():
         else:
             model = Model(args.node_num, args.p, args.c, args.c, args.graph_mode, args.model_mode, args.dataset_mode,
                           args.is_train, name).to(device)
+        start_epoch = 1
+        max_test_acc = 0
 
     if device is 'cuda':
         model = torch.nn.DataParallel(model).to(device)
@@ -123,13 +126,12 @@ def main():
     test_acc_list = []
     train_acc_list = []
     train_loss_list = []
-    max_test_acc = 0
     if not os.path.isdir("reporting"):
         os.mkdir("reporting")
 
     start_time = time.time()
     with open("./reporting/" + "c_" + str(args.c) + "_p_" + str(args.p) + "_graph_mode_" + args.graph_mode + "_dataset_" + args.dataset_mode + ".txt", "w") as f:
-        for epoch in range(1, args.epochs + 1):
+        for epoch in range(start_epoch, args.epochs + 1):
             # scheduler = CosineAnnealingLR(optimizer, epoch)
             epoch_list.append(epoch)
             train_loss, train_acc = train(model, train_loader, optimizer, criterion, epoch, args)
